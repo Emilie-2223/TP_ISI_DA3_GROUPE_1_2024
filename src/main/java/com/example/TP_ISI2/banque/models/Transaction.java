@@ -1,61 +1,77 @@
 package com.example.TP_ISI2.banque.models;
 
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-import java.util.Date;
+import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "transaction")
 public class Transaction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long senderAccountId; // Identifiant du compte expéditeur
-    private Long receiverAccountId; // Identifiant du compte destinataire
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_transaction")
+    private TransactionType type;
 
+    @Column(name = "compte_source_id")
+    private Long compteSourceId;
+
+    @Column(name = "compte_destination_id")
+    private Long compteDestinationId;
+
+    @Column(name = "montant")
+    private BigDecimal montant;
+
+    @Column(name = "date_transaction")
+    private LocalDateTime dateTransaction;
+
+    @Column(name = "description")
     private String description;
-    private double amount;
-    private Date transactionDate;
 
-    // Constructeurs
-    public Transaction() {
+    // Constructeurs, getters et setters
+    public TransactionType getType() {
+        return type;
     }
 
-    public Transaction(Long senderAccountId, Long receiverAccountId, String description, double amount, Date transactionDate) {
-        this.senderAccountId = senderAccountId;
-        this.receiverAccountId = receiverAccountId;
-        this.description = description;
-        this.amount = amount;
-        this.transactionDate = transactionDate;
+    public void setType(TransactionType type) {
+        this.type = type;
     }
 
-    // Getters et setters
-    public Long getId() {
-        return id;
+    public Long getCompteSourceId() {
+        return compteSourceId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCompteSourceId(Long compteSourceId) {
+        this.compteSourceId = compteSourceId;
     }
 
-    public Long getSenderAccountId() {
-        return senderAccountId;
+    public Long getCompteDestinationId() {
+        return compteDestinationId;
     }
 
-    public void setSenderAccountId(Long senderAccountId) {
-        this.senderAccountId = senderAccountId;
+    public void setCompteDestinationId(Long compteDestinationId) {
+        this.compteDestinationId = compteDestinationId;
     }
 
-    public Long getReceiverAccountId() {
-        return receiverAccountId;
+    public BigDecimal getMontant() {
+        return montant;
     }
 
-    public void setReceiverAccountId(Long receiverAccountId) {
-        this.receiverAccountId = receiverAccountId;
+    public void setMontant(BigDecimal montant) {
+        this.montant = montant;
+    }
+
+    public LocalDateTime getDateTransaction() {
+        return dateTransaction;
+    }
+
+    public void setDateTransaction(LocalDateTime dateTransaction) {
+        this.dateTransaction = dateTransaction;
     }
 
     public String getDescription() {
@@ -64,21 +80,5 @@ public class Transaction {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public Date getTransactionDate() {
-        return transactionDate;
-    }
-
-    public void setTransactionDate(Date transactionDate) {
-        this.transactionDate = transactionDate;
     }
 }
