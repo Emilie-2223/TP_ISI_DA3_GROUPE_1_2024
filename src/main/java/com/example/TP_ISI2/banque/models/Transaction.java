@@ -3,6 +3,7 @@ package com.example.TP_ISI2.banque.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -15,7 +16,7 @@ public class Transaction {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type_transaction")
+    @Column(name = "type")
     private TransactionType type;
 
     @Column(name = "compte_source_id")
