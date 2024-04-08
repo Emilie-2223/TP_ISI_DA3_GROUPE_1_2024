@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class TransactionService {
@@ -88,7 +89,79 @@ public class TransactionService {
         transaction.setCompteDestinationId(destinationAccountId);
         transaction.setMontant(amount);
         transaction.setDateTransaction(LocalDateTime.now());
-        transaction.setDescription("Virement de " + sourceAccountId + " vers " + destinationAccountId);
+        transaction.setDescription("Virement du compte " + sourceAccountId + " vers le compte" + destinationAccountId);
         transactionRepository.save(transaction);
     }
+
+
+    // Méthode pour récupérer les transactions d'un compte pendant une période donnée
+
+
+    @Transactional(readOnly = true)
+    public List<Transaction> getTransactionsByAccountIdAndPeriod(Long accountId, LocalDateTime startDate, LocalDateTime endDate) {
+        // Utilise la méthode existante du repository pour rechercher les transactions
+        List<Transaction> transactions = transactionRepository.findByCompteSourceIdAndDateTransactionBetween(accountId, startDate, endDate);
+        // Retournez les transactions sans effectuer de traitement supplémentaire
+        return transactions;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    @Transactional(readOnly = true)
+//    public List<Transaction> getTransactionsByAccountIdAndPeriod(Long accountId, LocalDateTime startDate, LocalDateTime endDate) {
+//        List<Transaction> transactions = transactionRepository.findByCompteSourceIdAndDateTransactionBetween(accountId, startDate, endDate);
+//        // Ajoutez des logs pour imprimer les transactions récupérées
+//        transactions.forEach(transaction -> {
+////            System.out.println("Transaction ID: " + transaction.getId());
+//            System.out.println("Compte Source ID: " + transaction.getCompteSourceId());
+//            System.out.println("Compte Destination ID: " + transaction.getCompteDestinationId());
+//            System.out.println("Montant: " + transaction.getMontant());
+//            System.out.println("Type: " + transaction.getType());
+//            // Ajoutez d'autres informations si nécessaire
+//        });
+//        return transactions;
+//    }
+
+
 }

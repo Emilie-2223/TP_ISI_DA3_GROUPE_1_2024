@@ -26,6 +26,8 @@ public class ClientService {
 
     // Méthode pour récupérer un client par son identifiant
     public Optional<Client> getClientById(Long id) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Client not found with id: " + id));
         return clientRepository.findById(id);
     }
 
@@ -34,6 +36,16 @@ public class ClientService {
         // Recherche du client par son identifiant
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Client not found with id: " + id));
+
+        // Mise à jour des attributs du client avec les détails du client passé dans la requête
+        client.setNom(clientDetails.getNom());
+        client.setPrenom(clientDetails.getPrenom());
+        client.setDateNaissance(clientDetails.getDateNaissance());
+        client.setSexe(clientDetails.getSexe());
+        client.setAdresse(clientDetails.getAdresse());
+        client.setNumeroTelephone(clientDetails.getNumeroTelephone());
+        client.setCourriel(clientDetails.getCourriel());
+        client.setNationalite(clientDetails.getNationalite());
 
         // Enregistrement des modifications dans la base de données et retour du client mis à jour
         return clientRepository.save(client);
