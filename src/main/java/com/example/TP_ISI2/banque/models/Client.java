@@ -1,7 +1,10 @@
 package com.example.TP_ISI2.banque.models;
 
+import com.example.TP_ISI2.banque.validators.ValidEmail;
 import jakarta.persistence.*;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 
@@ -19,6 +22,9 @@ public class Client {
     private String sexe;
     private String adresse;
     private long numeroTelephone;
+    @NotEmpty
+    @Email
+    @ValidEmail
     private String courriel;
     private String nationalite;
 
